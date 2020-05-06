@@ -193,9 +193,9 @@ local function _parse_dsn(dsn, obj)
    -- '{PROTOCOL}://{PUBLIC_KEY}:{SECRET_KEY}@{HOST}/{PATH}{PROJECT_ID}'
    obj.protocol, obj.public_key, obj.secret_key, obj.long_host,
          obj.path, obj.project_id =
-         string_match(dsn, "^([^:]+)://([^:]+):([^@]+)@([^/]+)(.*/)(.+)$")
+         string_match(dsn, "^([^:]+)://([^:]+)([:^@]*)@([^/]+)(.*/)(.+)$")
 
-   if obj.protocol and obj.public_key and obj.secret_key and obj.long_host
+   if obj.protocol and obj.public_key and obj.long_host
          and obj.project_id then
 
       local host, port, err = _parse_host_port(obj.protocol, obj.long_host)
@@ -220,7 +220,7 @@ _M._parse_dsn = _parse_dsn
 --- Create a new Sentry client. Three parameters:
 -- @param self raven client
 -- @param dsn  The DSN of the Sentry instance with this format:
---             <pre>{PROTOCOL}://{PUBLIC_KEY}:{SECRET_KEY}@{\HOST}/{PATH}{PROJECT_ID}</pre>
+--             <pre>{PROTOCOL}://{PUBLIC_KEY}@{\HOST}/{PATH}{PROJECT_ID}</pre>
 --             <pre>http://pub:secret@127.0.0.1:8080/sentry/proj-id</pre>
 -- @param conf client configuration. Conf should be a hash table. Possible keys are:
 --    <ul>
