@@ -191,9 +191,12 @@ local function _parse_dsn(dsn, obj)
    assert(type(obj) == "table")
 
    -- '{PROTOCOL}://{PUBLIC_KEY}:{SECRET_KEY}@{HOST}/{PATH}{PROJECT_ID}'
-   obj.protocol, obj.public_key, obj.secret_key, obj.long_host,
+   obj.protocol, obj.public_key, obj.colon, obj.secret_key, obj.long_host,
          obj.path, obj.project_id =
-         string_match(dsn, "^([^:]+)://([^:]+)([:^@]*)@([^/]+)(.*/)(.+)$")
+         string_match(dsn, "^([^:]+)://([^:]+)([:]*)([^@]*)@([^/]+)(.*/)(.+)$")
+         print('YAAAL')
+         print(obj.public_key)
+         print(obj.secret_key)
 
    if obj.protocol and obj.public_key and obj.long_host
          and obj.project_id then
